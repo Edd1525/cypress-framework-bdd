@@ -70,7 +70,7 @@ workflows:
                 command: 'npm run generate:multireport'
             - store_test_results:
                 path: cypress/reports
-            - store_test_results:
+            - store_artifacts:
                 path: reports/cucumber-multi-report
             - store_artifacts:
                 path: cypress/reports
