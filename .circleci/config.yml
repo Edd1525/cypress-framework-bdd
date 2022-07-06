@@ -1,11 +1,70 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@2.0.0
-  workflows:
-    example-workflow:
-      jobs:
-        - cypress/run:
-            executor: base-14 
-            parallel: true 
-            parallelism: 1 
-            browser: electron 
+  # use latest 1.x.y version of the orb
+  # best practice is to use an exact version
+  cypress: cypress-io/cypress@1.29.0
+
+executors:
+  chrome80-ff72:
+    docker:
+      - image: 'cypress/browsers:node14.17.0-chrome88-ff89'
+
+workflows:
+  build-and-test:
+    jobs:
+      # checks out code and installs dependencies once
+      - cypress/install:
+          filters:
+            branches:
+              only: main
+          name: Install
+
+      # run WeUI Test inside Docker image with Chrome pre-installed
+      - cypress/run:
+          filters:
+            branches:
+              only: main
+          name: WebUI Test
+          requires:
+            - Install
+          executor: chrome80-ff72
+          record: false
+          browser: chrome
+          parallel: true
+          parallelism: 2
+          group: WebUI Test
+          ci-build-id: ${CIRCLE_SHA1}
+          spec: cypress/integration/webtest/*.feature
+          post-steps:
+            - store_test_results:
+                path: cypress/reports
+            - store_artifacts:
+                path: cypress/reports
+            - store_artifacts:
+                path: cypress/videos
+            - store_artifacts:
+                path: cypress/screenshots
+            
+       # run API Test
+      - cypress/run:
+          filters:
+            branches:
+              only: main
+          name: API Test
+          requires:
+            - Install
+          record: false
+          parallel: true
+          parallelism: 2
+          group: 'API Test'
+          ci-build-id: ${CIRCLE_SHA1}
+          spec: cypress/integration/apitest/*.feature
+          post-steps:
+            - store_test_results:
+                path: cypress/reports
+            - store_artifacts:
+                path: cypress/reports
+            - store_artifacts:
+                path: cypress/videos
+            - store_artifacts:
+                path: cypress/screenshots
