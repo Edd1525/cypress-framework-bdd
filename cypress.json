@@ -39,7 +39,7 @@
             "timestamp": "mmddyyyy_HHMMss"
         }
     },
-    "video": false,
+    "video": true,
     "ignoreTestFiles": [
         "**/__snapshots__/*",
         "**/__image_snapshots__/*"
