@@ -4,9 +4,10 @@
   "description": "An automated testing framework based on CypressIO",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx cypress run --browser chrome --headed",
     "cypress:run": "npx cypress run --browser chrome",
     "cypress:open": "npx cypress open",
+    "generate:multireport": "node cucumber-html-report.js",
     "test-login": "npx cypress run --spec 'cypress/integration/webtest/Login.feature' --browser chrome",
     "test-postsearch": "npx cypress run --spec 'cypress/integration/webtest/PostSearch.feature' --browser chrome",
     "test-api-get": "npx cypress run --spec 'cypress/integration/apitest/API-GET.feature'",
@@ -33,15 +34,24 @@
   },
   "homepage": "https://github.com/trongtuyen96/cypress-framework#readme",
   "dependencies": {},
+  "cypress-cucumber-preprocessor": {
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/cucumber-json",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
+  },
   "devDependencies": {
     "cypress": "8.3.0",
     "cypress-audit": "1.0.0",
-    "cypress-cucumber-preprocessor": "4.2.0",
+    "cypress-cucumber-preprocessor": "^4.2.0",
     "cypress-mochawesome-reporter": "2.2.1",
     "cypress-multi-reporters": "1.5.0",
     "cypress-plugin-snapshots": "1.4.4",
     "cypress-terminal-report": "3.3.2",
     "cypress-xpath": "1.6.2",
-    "mocha-junit-reporter": "2.0.0"
+    "mocha-junit-reporter": "2.0.0",
+    "multiple-cucumber-html-reporter": "^1.21.4"
   }
 }

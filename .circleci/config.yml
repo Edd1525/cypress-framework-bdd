@@ -44,7 +44,9 @@ workflows:
                 path: cypress/videos
             - store_artifacts:
                 path: cypress/screenshots
-            
+            - store_artifacts:
+                path: reports/cucumber-htmlreport.html
+
        # run API Test
       - cypress/run:
           filters:
@@ -60,6 +62,8 @@ workflows:
           ci-build-id: ${CIRCLE_SHA1}
           spec: cypress/integration/apitest/*.feature
           post-steps:
+            - run:
+                command: npm run generate:multireport
             - store_test_results:
                 path: cypress/reports
             - store_artifacts:

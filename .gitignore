@@ -105,4 +105,8 @@ dist
 
 # Reports
 cypress/reports/junit
+cypress/cucumber-json
+cypress/videos
+cypress/screenshots
 cypress/reports/mochawesome
+reports
