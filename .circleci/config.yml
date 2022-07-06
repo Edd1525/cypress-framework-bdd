@@ -37,7 +37,8 @@ workflows:
           spec: cypress/integration/webtest/*.feature
           post-steps:
             - run:
-                command: npm run generate:multireport
+                name: 'Generate Multiple Report'
+                command: 'npm run generate:multireport'
             - store_test_results:
                 path: cypress/reports
             - store_test_results:
@@ -65,7 +66,8 @@ workflows:
           spec: cypress/integration/apitest/*.feature
           post-steps:
             - run:
-                command: npm run generate:multireport
+                name: 'Generate Multiple Report'
+                command: 'npm run generate:multireport'
             - store_test_results:
                 path: cypress/reports
             - store_test_results:
