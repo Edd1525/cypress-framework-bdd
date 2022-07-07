@@ -21,6 +21,7 @@ workflows:
 
       # run WeUI Test inside Docker image with Chrome pre-installed
       - cypress/run:
+          record: true
           filters:
             branches:
               only: main
@@ -52,6 +53,7 @@ workflows:
 
        # run API Test
       - cypress/run:
+          record: true
           filters:
             branches:
               only: main
